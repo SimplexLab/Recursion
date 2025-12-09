@@ -7,8 +7,8 @@ import numpy as np
 from numba import njit
 import torch.distributed as dist
 
-from dataset.build_arc_dataset import inverse_aug, grid_hash, arc_grid_to_np
-from dataset.common import PuzzleDatasetMetadata
+from recursion.dataset.build_arc_dataset import inverse_aug, grid_hash, arc_grid_to_np
+from recursion.dataset.common import PuzzleDatasetMetadata
 
 @njit
 def _crop(grid: np.ndarray):

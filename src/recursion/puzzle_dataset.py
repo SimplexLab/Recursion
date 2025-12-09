@@ -1,14 +1,14 @@
 import os
 import json
-from typing import Tuple, List, Dict, Optional
+from typing import List
 import numpy as np
 import pydantic
 
 import torch
 from torch.utils.data import IterableDataset, get_worker_info
 
-from models.losses import IGNORE_LABEL_ID
-from dataset.common import PuzzleDatasetMetadata
+from recursion.models.losses import IGNORE_LABEL_ID
+from recursion.dataset.common import PuzzleDatasetMetadata
 
 from argdantic import ArgParser
 from pydantic import BaseModel

@@ -1,4 +1,4 @@
-from typing import Tuple, List, Dict, Optional
+from typing import Tuple, List, Dict
 from dataclasses import dataclass
 import math
 import torch
@@ -6,9 +6,9 @@ import torch.nn.functional as F
 from torch import nn
 from pydantic import BaseModel
 
-from models.common import trunc_normal_init_
-from models.layers import rms_norm, SwiGLU, Attention, RotaryEmbedding, CosSin, CastedEmbedding, CastedLinear
-from models.sparse_embedding import CastedSparseEmbedding
+from recursion.models.common import trunc_normal_init_
+from recursion.models.layers import rms_norm, SwiGLU, Attention, RotaryEmbedding, CosSin, CastedEmbedding, CastedLinear
+from recursion.models.sparse_embedding import CastedSparseEmbedding
 
 @dataclass
 class HierarchicalReasoningModel_ACTV1InnerCarry:

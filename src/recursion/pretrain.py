@@ -20,9 +20,9 @@ from omegaconf import DictConfig
 from adam_atan2 import AdamATan2
 
 from puzzle_dataset import PuzzleDataset, PuzzleDatasetConfig, PuzzleDatasetMetadata
-from utils.functions import load_model_class, get_model_source_path
-from models.sparse_embedding import CastedSparseEmbeddingSignSGD_Distributed
-from models.ema import EMAHelper
+from recursion.utils.functions import load_model_class, get_model_source_path
+from recursion.models.sparse_embedding import CastedSparseEmbeddingSignSGD_Distributed
+from recursion.models.ema import EMAHelper
 
 
 class LossConfig(pydantic.BaseModel):
@@ -532,7 +532,7 @@ def load_synced_config(hydra_config: DictConfig, rank: int, world_size: int) -> 
     return objects[0]  # type: ignore
 
 
-@hydra.main(config_path="config", config_name="cfg_pretrain", version_base=None)
+@hydra.main(config_path="../../config", config_name="cfg_pretrain", version_base=None)
 def launch(hydra_config: DictConfig):
     RANK = 0
     WORLD_SIZE = 1
