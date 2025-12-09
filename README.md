@@ -9,7 +9,6 @@ Recommendations:
 - Using `uv`: https://docs.astral.sh/uv/
 - Using `pyenv` to manage python versions: https://github.com/pyenv/pyenv
 
-```bash```
 Standard install (no GPU or majority of recent Nvidia GPUs):
 ```bash
 uv venv
