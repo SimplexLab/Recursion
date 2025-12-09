@@ -1,0 +1,28 @@
+[project]
+name = "recursion"
+version = "0.1.0"
+description = "Improve RNN training"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+	"torch",
+	"adam-atan2",
+	"einops",
+	"tqdm",
+	"coolname",
+	"pydantic",
+	"argdantic",
+	"wandb",
+	"omegaconf",
+	"hydra-core",
+	"huggingface_hub",
+	"packaging",
+	"ninja",
+	"wheel",
+	"setuptools",
+	"setuptools-scm",
+	"pydantic-core",
+	"huggingface_hub",
+	"numba",
+	"triton",
+]
