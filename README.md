@@ -13,12 +13,14 @@ Standard install (no GPU or majority of recent Nvidia GPUs):
 ```bash
 uv venv
 uv pip install -e .
+uv run pre-commit install
 ```
 
 With Nvidia GTX 1080 GPU (need to force CUDA version to be 12.6):
 ```bash
 uv venv
 uv pip install -e . --index-strategy unsafe-best-match --extra-index-url https://download.pytorch.org/whl/cu126
+uv run pre-commit install
 ```
 
 If you want the logger to sync results to your Weights & Biases (https://wandb.ai/):
