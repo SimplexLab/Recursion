@@ -25,4 +25,5 @@ dependencies = [
 	"huggingface_hub",
 	"numba",
 	"triton",
+	"pre-commit",
 ]
