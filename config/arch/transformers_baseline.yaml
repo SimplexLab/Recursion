@@ -7,9 +7,9 @@ halt_exploration_prob: 0.1
 halt_max_steps: 16
 
 H_cycles: 1  # kept for compatibility
-H_layers: 8 
+H_layers: 8
 
-hidden_size: 512  
+hidden_size: 512
 num_heads: 12
 expansion: 4
 

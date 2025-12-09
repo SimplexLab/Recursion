@@ -36,4 +36,3 @@ repos:
     hooks:
     -   id: black  # Format code.
         args: [--line-length=100]
-

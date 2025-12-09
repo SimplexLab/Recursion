@@ -13,17 +13,25 @@ Architecture: Single-level transformer that processes the full 30x30 grid as a
 
 """
 
-from typing import Tuple, List, Dict
-from dataclasses import dataclass
 import math
+from dataclasses import dataclass
+from typing import Dict, List, Tuple
 
 import torch
 import torch.nn.functional as F
-from torch import nn
 from pydantic import BaseModel
+from torch import nn
 
 from recursion.models.common import trunc_normal_init_
-from recursion.models.layers import rms_norm, SwiGLU, Attention, RotaryEmbedding, CosSin, CastedEmbedding, CastedLinear
+from recursion.models.layers import (
+    Attention,
+    CastedEmbedding,
+    CastedLinear,
+    CosSin,
+    RotaryEmbedding,
+    SwiGLU,
+    rms_norm,
+)
 from recursion.models.sparse_embedding import CastedSparseEmbedding
 
 
@@ -65,7 +73,9 @@ class Model_ACTV2Config(BaseModel):
     # Halting Q-learning config
     halt_max_steps: int
     halt_exploration_prob: float
-    act_enabled: bool = True  # If False, always run halt_max_steps (no early stopping during training)
+    act_enabled: bool = (
+        True  # If False, always run halt_max_steps (no early stopping during training)
+    )
     act_inference: bool = False  # If True, use adaptive computation during inference
 
     forward_dtype: str = "bfloat16"
@@ -96,7 +106,9 @@ class Model_ACTV2Block(nn.Module):
             variance_epsilon=self.norm_eps,
         )
         # Fully Connected
-        hidden_states = rms_norm(hidden_states + self.mlp(hidden_states), variance_epsilon=self.norm_eps)
+        hidden_states = rms_norm(
+            hidden_states + self.mlp(hidden_states), variance_epsilon=self.norm_eps
+        )
         return hidden_states
 
 
@@ -106,7 +118,9 @@ class Model_ACTV2ReasoningModule(nn.Module):
 
         self.layers = torch.nn.ModuleList(layers)
 
-    def forward(self, hidden_states: torch.Tensor, input_injection: torch.Tensor, **kwargs) -> torch.Tensor:
+    def forward(
+        self, hidden_states: torch.Tensor, input_injection: torch.Tensor, **kwargs
+    ) -> torch.Tensor:
         # Input injection (add)
         hidden_states = hidden_states + input_injection
         # Layers
@@ -170,7 +184,9 @@ class Model_ACTV2_Inner(nn.Module):
 
         # Initial states
         self.H_init = nn.Buffer(
-            trunc_normal_init_(torch.empty(self.config.hidden_size, dtype=self.forward_dtype), std=1),
+            trunc_normal_init_(
+                torch.empty(self.config.hidden_size, dtype=self.forward_dtype), std=1
+            ),
             persistent=True,
         )
 
@@ -193,13 +209,19 @@ class Model_ACTV2_Inner(nn.Module):
                 puzzle_embedding = F.pad(puzzle_embedding, (0, pad_count))
 
             embedding = torch.cat(
-                (puzzle_embedding.view(-1, self.puzzle_emb_len, self.config.hidden_size), embedding), dim=-2
+                (
+                    puzzle_embedding.view(-1, self.puzzle_emb_len, self.config.hidden_size),
+                    embedding,
+                ),
+                dim=-2,
             )
 
         # Position embeddings
         if self.config.pos_encodings == "learned":
             # scale by 1/sqrt(2) to maintain forward variance
-            embedding = 0.707106781 * (embedding + self.embed_pos.embedding_weight.to(self.forward_dtype))
+            embedding = 0.707106781 * (
+                embedding + self.embed_pos.embedding_weight.to(self.forward_dtype)
+            )
 
         # Scale
         return self.embed_scale * embedding
@@ -289,7 +311,11 @@ class Model_ACTV2(nn.Module):
             new_inner_carry, new_current_data
         )
 
-        outputs = {"logits": logits, "q_halt_logits": q_halt_logits, "q_continue_logits": q_continue_logits}
+        outputs = {
+            "logits": logits,
+            "q_halt_logits": q_halt_logits,
+            "q_continue_logits": q_continue_logits,
+        }
 
         with torch.no_grad():
             # Step
@@ -337,6 +363,4 @@ class Model_ACTV2(nn.Module):
                         )
                     )
 
-        return Model_ACTV2Carry(
-            new_inner_carry, new_steps, halted, new_current_data
-        ), outputs
+        return Model_ACTV2Carry(new_inner_carry, new_steps, halted, new_current_data), outputs
