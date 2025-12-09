@@ -5,8 +5,6 @@ from typing import List
 import numpy as np
 import pydantic
 import torch
-from argdantic import ArgParser
-from pydantic import BaseModel
 from torch.utils.data import IterableDataset, get_worker_info
 
 from recursion.dataset.common import PuzzleDatasetMetadata

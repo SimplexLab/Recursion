@@ -1,7 +1,6 @@
 import math
 
 import torch
-from torch import nn
 
 
 def trunc_normal_init_(
