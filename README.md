@@ -51,7 +51,7 @@ uv run python -m recursion.dataset.build_arc_dataset \
 uv run python -m recursion.dataset.build_sudoku_dataset --output-dir data/sudoku-extreme-1k-aug-1000  --subsample-size 1000 --num-aug 1000  # 1000 examples, 1000 augments
 
 # Maze-Hard
-uv run python -m recursion.dataset.build_maze_dataset.py # 1000 examples, 8 augments
+uv run python -m recursion.dataset.build_maze_dataset # 1000 examples, 8 augments
 ```
 
 ## Experiments
