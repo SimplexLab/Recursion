@@ -15,7 +15,7 @@ import wandb
 import yaml
 from adam_atan2 import AdamATan2
 from omegaconf import DictConfig
-from puzzle_dataset import PuzzleDataset, PuzzleDatasetConfig, PuzzleDatasetMetadata
+from recursion.puzzle_dataset import PuzzleDataset, PuzzleDatasetConfig, PuzzleDatasetMetadata
 from torch import nn
 from torch.utils.data import DataLoader
 

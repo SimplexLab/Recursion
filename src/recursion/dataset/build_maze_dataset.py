@@ -6,7 +6,7 @@ from typing import Optional
 
 import numpy as np
 from argdantic import ArgParser
-from common import PuzzleDatasetMetadata, dihedral_transform
+from recursion.dataset.common import PuzzleDatasetMetadata, dihedral_transform
 from huggingface_hub import hf_hub_download
 from pydantic import BaseModel
 from tqdm import tqdm
