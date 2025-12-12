@@ -56,6 +56,9 @@ uv run python -m recursion.dataset.build_maze_dataset # 1000 examples, 8 augment
 
 ## Experiments
 
+If using a GPU that is too old for Triton (CUDA Capability < 7.0, like NVIDIA GeForce GTX 1080), add
+`DISABLE_COMPILE=1` before the following commands.
+
 ### Sudoku-Extreme (assuming 1 L40S GPU):
 
 ```bash
