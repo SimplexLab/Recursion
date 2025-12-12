@@ -11,16 +11,16 @@ import pydantic
 import torch
 import torch.distributed as dist
 import tqdm
-import wandb
 import yaml
-from adam_atan2 import AdamATan2
+from adam_atan2_pytorch import AdamAtan2
 from omegaconf import DictConfig
-from recursion.puzzle_dataset import PuzzleDataset, PuzzleDatasetConfig, PuzzleDatasetMetadata
 from torch import nn
 from torch.utils.data import DataLoader
 
+import wandb
 from recursion.models.ema import EMAHelper
 from recursion.models.sparse_embedding import CastedSparseEmbeddingSignSGD_Distributed
+from recursion.puzzle_dataset import PuzzleDataset, PuzzleDatasetConfig, PuzzleDatasetMetadata
 from recursion.utils.functions import get_model_source_path, load_model_class
 
 
@@ -156,9 +156,9 @@ def create_model(
     # Optimizers and lr
     if config.arch.puzzle_emb_ndim == 0:
         optimizers = [
-            AdamATan2(
+            AdamAtan2(
                 model.parameters(),
-                lr=0,  # Needs to be set by scheduler
+                lr=0.0001,  # Needs to be set by scheduler
                 weight_decay=config.weight_decay,
                 betas=(config.beta1, config.beta2),
             )
@@ -168,7 +168,7 @@ def create_model(
         optimizers = [
             CastedSparseEmbeddingSignSGD_Distributed(
                 model.model.puzzle_emb.buffers(),  # type: ignore
-                lr=0,  # Needs to be set by scheduler
+                lr=0.0001,  # Needs to be set by scheduler
                 weight_decay=config.puzzle_emb_weight_decay,
                 world_size=world_size,
             )
@@ -178,13 +178,13 @@ def create_model(
         optimizers = [
             CastedSparseEmbeddingSignSGD_Distributed(
                 model.model.puzzle_emb.buffers(),  # type: ignore
-                lr=0,  # Needs to be set by scheduler
+                lr=0.0001,  # Needs to be set by scheduler
                 weight_decay=config.puzzle_emb_weight_decay,
                 world_size=world_size,
             ),
-            AdamATan2(
+            AdamAtan2(
                 model.parameters(),
-                lr=0,  # Needs to be set by scheduler
+                lr=0.0001,  # Needs to be set by scheduler
                 weight_decay=config.weight_decay,
                 betas=(config.beta1, config.beta2),
             ),
